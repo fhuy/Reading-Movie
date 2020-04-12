@@ -1,0 +1,63 @@
+<!-- 相对路径 -->
+<import src="post-item/post-item-template.wxml" />
+<view>
+  <swiper indicator-dots="true" autoplay="true" interval="2000">
+    <swiper-item>
+      <image src="../../images/post/xiaolong.jpg"></image>
+    </swiper-item>
+    <swiper-item>
+      <image src="../../images/post/cat.png"></image>
+    </swiper-item>
+    <swiper-item>
+      <image src="../../images/post/vr.png"></image>   
+    </swiper-item>    
+  </swiper>
+  <block wx:for="{{posts_content}}" wx:for-item="item" wx:key="index" >
+    <!-- <view class="post-container">
+        <view class="post-author-date">
+            <image class="post-author" src="../../images/avatar/2.png"></image>
+            <text class="post-date">Nov 25 2016</text>
+        </view>
+        <text class="post-title">正是虾肥螃蟹壮时</text>
+        <image class="post-image" src="../../images/post/crab.png"></image>
+        <text class="post-content">很长的文字描述</text>
+        <view class="post-like">
+          <image class="post-like-image" src="../../images/icon/chat.png"></image>
+          <text class="post-like-font">92</text>
+          <image class="post-like-image" src="../../images/icon/chat1.png"></image>
+          <text>65</text>
+        </view>
+
+        <view class="post-author-date">
+            <image class="post-author" src="../../images/avatar/3.png"></image>
+            <text class="post-date">Nov 25 2016</text>
+        </view>
+        <text class="post-title">正是虾肥螃蟹壮时</text>
+        <image class="post-image" src="../../images/post/crab.png"></image>
+        <text class="post-content">很长的文字描述</text>
+        <view class="post-like">
+          <image class="post-like-image" src="../../images/icon/chat.png"></image>
+          <text class="post-like-font">92</text>
+          <image class="post-like-image" src="../../images/icon/chat1.png"></image>
+          <text>65</text>
+        </view>
+
+        <view class="post-author-date">
+            <image class="post-author" src="../../images/avatar/4.png"></image>
+            <text class="post-date">Nov 25 2016</text>
+        </view>
+        <text class="post-title">正是虾肥螃蟹壮时</text>
+        <image class="post-image" src="../../images/post/crab.png"></image>
+        <text class="post-content">很长的文字描述</text>
+        <view class="post-like">
+          <image class="post-like-image" src="../../images/icon/chat.png"></image>
+          <text class="post-like-font">92</text>
+          <image class="post-like-image" src="../../images/icon/chat1.png"></image>
+          <text>65</text>
+        </view>            
+    </view>  -->
+    <view catchtap="onPostTap" data-postId="{{item.postId}}">
+      <template is="postItem" data="{{...item}}" />
+    </view>
+  </block>
+</view>

@@ -1,0 +1,10 @@
+/**app.wxss**/
+text{
+  font-family: MicroSoft Yahei;
+  font-size: 24rpx;
+}
+.author-avatar{
+  width: 60rpx;
+  height: 60rpx;
+  vertical-align: middle;
+}
