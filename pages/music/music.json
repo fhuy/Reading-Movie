@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "mp-icon": "../../icon/icon"
+  },
+  "navigationBarTitleText": "音乐",
+  "navigationBarTextStyle": "white"
+}

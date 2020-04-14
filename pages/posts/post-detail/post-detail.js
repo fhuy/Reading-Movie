@@ -3,7 +3,8 @@ Page({
   data: {
     postData: {},
     collected: false, 
-    currentPostId: 0  
+    currentPostId: 0,
+    isPlayingMusic: false  
   },
   onLoad: function(option){
     const postId = option.id,
@@ -12,17 +13,8 @@ Page({
       postData,
       currentPostId: postId                
     });
-    // const postsCollected = wx.getStorageSync('postsCollected')||{};
-    // const 
-    // if(wx.getStorageSync('postsCollected')){
-    //   const postsCollected = wx.getStorageSync('postsCollected')
-    // }
     // //如果在data上，xxx收藏状态，不存在SS中，那一回来，就没有了
     // //而每一次改动都要存在SS中，因为再打开要从它中拿
-    // //也因此是先判断没有SS，再setSS
-    // if(!postsCollected[postId]){
-    //   postsCollected[postId] = false;
-    // }
     let postsCollected = wx.getStorageSync('posts_collected')
     if(postsCollected){
       this.setData({
@@ -33,10 +25,7 @@ Page({
       let postsCollected = {};
       postsCollected[postId] = false;
       wx.setStorageSync('posts_collected', postsCollected)
-    }
-    // this.setData({
-    //   collected: postsCollected[postId]
-    // })    
+    } 
   },
   onCollectionTap: function(){
     const postsCollected = wx.getStorageSync('posts_collected'),
@@ -116,18 +105,34 @@ Page({
     }
   },
   onMusicTap: function(){
-    console.log('hi')
-    // const BackgroundAudioManager = wx.getBackgroundAudioManager();
-    // BackgroundAudioManager.src = 'http://ws.stream.qqmusic.qq.com/M500001VfvsJ21xFqb.mp3?guid=ffffffff82def4af4b12b3cd9337d5e7&uin=346897220&vkey=6292F51E1E384E061FF02C31F716658E5C81F5594D561F2E88B854E81CAAB7806D5E4F103E55D33C16F3FAC506D1AB172DE8600B37E43FAD&fromtag=46';
-    // BackgroundAudioManager.title = '此时此刻'
-    // BackgroundAudioManager.epname = '此时此刻'
-    // BackgroundAudioManager.singer = '许巍'
-    // BackgroundAudioManager.coverImgUrl = 'http://y.gtimg.cn/music/photo_new/T002R300x300M000003rsKF44GyaSk.jpg?max_age=2592000'
-
-    wx.playBackgroundAudio({
-      dataUrl: 'http://ws.stream.qqmusic.qq.com/C100002I8eGJ28BI17.m4a?fromtag=38',
-      title: '此时此刻',
-      coverImgUrl: 'http://y.gtimg.cn/music/photo_new/T002R300x300M000003rsKF44GyaSk.jpg?max_age=2592000'
+    const BackgroundAudioManager = wx.getBackgroundAudioManager();
+    if(this.data.isPlayingMusic){
+      BackgroundAudioManager.pause();
+      this.setData({
+        isPlayingMusic: false
+      })
+    }else{
+      // BackgroundAudioManager.src = 'http://m8.music.126.net/20200414151900/031827be9160de37d4206ab5c26a1d4c/ymusic/0fd6/4f65/43ed/a8772889f38dfcb91c04da915b301617.mp3'
+      BackgroundAudioManager.src = 'http://m8.music.126.net/20200414105411/dac29f8c9c12e9f50fbd9427c2c107bb/ymusic/332a/ee4f/5f6a/bee5e5efcd290ef7559ae9127e630aea.mp3'
+      BackgroundAudioManager.title = '此时此刻'
+      BackgroundAudioManager.epname = '此时此刻'
+      BackgroundAudioManager.singer = '许巍'
+      BackgroundAudioManager.coverImgUrl = 'https://p1.music.126.net/6y-UleORITEDbvrOLV0Q8A==/5639395138885805.jpg'
+      this.setData({
+        isPlayingMusic: true
+      })      
+    }
+  },
+  requestMusic: function(){
+    console.log(11111)
+    wx.request({
+      url: 'http://localhost:3000/song/url?id=33894312',
+      success (res) {
+        console.log('res.data', res.data)
+        console.log('res.data.data', res.data.data)
+        console.log('res.data.data[0]', res.data.data[0])
+        console.log('res.data.data[0].url', res.data.data[0].url)
+      }
     })
   }
 })

@@ -9,16 +9,12 @@ Page({
     })
   },
   onReady: function(){
-    console.log("onready")
   },
   onShow: function(){
-    console.log("onshow")
   },
   onHide: function(){
-    console.log("onhide")
   },
   onUnload: function(){
-    console.log("onunload")
   },
   onPostTap: function(event){
     const postId=event.currentTarget.dataset.postid;

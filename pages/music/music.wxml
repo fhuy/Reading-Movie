@@ -1,0 +1,4 @@
+<view>
+    <image src="/images/avatar/1.png" catchtap="toMusicList"></image>
+    <image src="/images/avatar/1.png" catchtap="toMusicList"></image>
+</view>
