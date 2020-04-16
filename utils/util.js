@@ -1,19 +1,25 @@
-const formatTime = date => {
-  const year = date.getFullYear()
-  const month = date.getMonth() + 1
-  const day = date.getDate()
-  const hour = date.getHours()
-  const minute = date.getMinutes()
-  const second = date.getSeconds()
-
-  return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
+// https://api.imjad.cn/cloudmusic/?type=song&id=375168
+const base_Url = "https://api.imjad.cn/cloudmusic/?",
+      sucCode = 200;
+const searchSongId = (searchType, songId) => {
+  return new Promise((resolve, reject) => {
+    wx.request({
+      url: `${base_Url}type=${searchType}&id=${songId}`,
+      // success: (res) => {
+      //   if(res.code === sucCode){
+      //     resolve(res);
+      //   }
+      //   console.log('res', res.data)
+      // }, 
+      success: (res) => resolve(res), 
+      fail: (res) => reject(res)
+    })
+    console.log('url', `${base_Url}type=${searchType}&id=${songId}`)
+  })
 }
 
-const formatNumber = n => {
-  n = n.toString()
-  return n[1] ? n : '0' + n
-}
+
 
 module.exports = {
-  formatTime: formatTime
+  searchSongId: searchSongId
 }
