@@ -1,4 +1,5 @@
-var postData=require('../../data/posts-data')
+let postData=require('../../data/posts-data')
+
 Page({
   data:{
     posts_content: [],
@@ -17,7 +18,7 @@ Page({
   onUnload: function(){
   },
   onPostTap: function(event){
-    const postId=event.currentTarget.dataset.postid;
+    const postId = event.target.dataset.type? event.target.dataset.postid : event.currentTarget.dataset.postid;
     wx.navigateTo({
       url: `post-detail/post-detail?id=${postId}`
     })
@@ -38,5 +39,5 @@ Page({
         // 不管成功失败都会执行
       }
     }
-  }
+  },
 })

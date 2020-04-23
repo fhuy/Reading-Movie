@@ -1,11 +1,12 @@
 const postsData = require('../../../data/posts-data'),
-      API = require('../../../utils/util')
+      API = require('../../../utils/util');
+var app = getApp()
 Page({
   data: {
     postData: {},
     collected: false, 
     currentPostId: 0,
-    isPlayingMusic: false  
+    // isPlayingMusic: false  
   },
   onLoad: function(option){
     const postId = option.id,
@@ -27,6 +28,32 @@ Page({
       postsCollected[postId] = false;
       wx.setStorageSync('posts_collected', postsCollected)
     } 
+    // 解决离开页面时音乐正在播放，回来时页面音乐是停止符号
+    if(app.globalData.g_isPlayingMusic && app.globalData.g_currentMusicId === postId){
+      // this.data.isPlayingMusic = true;
+      this.setData({
+        isPlayingMusic: true 
+      })
+    }
+    this.setMusicMonitor();
+  },
+  setMusicMonitor: function(){
+    let that = this;
+    let BackgroundAudioManager = wx.getBackgroundAudioManager();
+    BackgroundAudioManager.onPlay(function() {
+      that.setData({
+        isPlayingMusic: true
+      })
+      app.globalData.g_isPlayingMusic = true;
+      app.globalData.g_currentMusicId = that.data.currentPostId;
+    })
+    BackgroundAudioManager.onPause(function() {
+      that.setData({
+        isPlayingMusic: false
+      })
+      app.globalData.g_isPlayingMusic = false;
+      app.globalData.g_currentMusicId = null;
+    })
   },
   onCollectionTap: function(){
     const postsCollected = wx.getStorageSync('posts_collected'),
@@ -106,13 +133,14 @@ Page({
     }
   },
   onMusicTap: function(){
-    let musicUrl = 0,
+    let musicUrl,
         // currentMusic = postsData.postList[this.data.currentPostId].music,        
         currentMusic = this.data.postData.music, 
         songId = currentMusic.id;
     API.searchSongId('song', songId).then(res => {
       if(res.statusCode === 200){
         musicUrl = res.data.data[0].url;
+        console.log('musicUrl', musicUrl);
         const BackgroundAudioManager = wx.getBackgroundAudioManager();
         if(this.data.isPlayingMusic){
           BackgroundAudioManager.pause();

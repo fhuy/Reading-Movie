@@ -1,10 +1,15 @@
 {
   "pages": [
+    "pages/welcome/welcome",
+    "pages/movies/movies",
     "pages/posts/post",
     "pages/posts/post-detail/post-detail",
-    "pages/welcome/welcome",
-
-    "pages/music/music"
+    "pages/music/music",
+    "pages/movies/more-movie/more-movie.js",
+    "pages/movies/movie-grid/more-grid-template.wxss",
+    "pages/movies/movie-detail/movie-detail",
+    "pages/movies/movie/movie-template.wxml",
+    "pages/movies/movie-list/movie-list-template"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -21,6 +26,12 @@
         "text": "阅读",
         "iconPath": "images/tab/yuedu.png",
         "selectedIconPath": "images/tab/yuedu_hl.png"
+      },
+      {
+        "pagePath": "pages/movies/movies",
+        "text": "电影",
+        "iconPath": "images/tab/dianying.png",
+        "selectedIconPath": "images/tab/dianying_hl.png"
       },
       {
         "pagePath": "pages/music/music",
