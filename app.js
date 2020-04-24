@@ -36,6 +36,8 @@ App({
   globalData: {
     userInfo: null,
     g_isPlayingMusic: false,      //音乐是否正在被播放
-    g_currentMusicId: null        //哪一首音乐在被播放
+    g_currentMusicId: null,        //哪一首音乐在被播放
+    doubanBase: "https://api.douban.com",
+    doubanApikey: "apikey=0df993c66c0c636e29ecbb5344252a4a"
   }
 })

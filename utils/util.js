@@ -5,12 +5,6 @@ const searchSongId = (searchType, songId) => {
   return new Promise((resolve, reject) => {
     wx.request({
       url: `${base_Url}type=${searchType}&id=${songId}`,
-      // success: (res) => {
-      //   if(res.code === sucCode){
-      //     resolve(res);
-      //   }
-      //   console.log('res', res.data)
-      // }, 
       success: (res) => resolve(res), 
       fail: (res) => reject(res)
     })
@@ -18,8 +12,23 @@ const searchSongId = (searchType, songId) => {
   })
 }
 
+const convertToStarsArray = (stars) => {
+  let num = stars.toString().substring(0, 1);
+  let array = [];
+  for(let i = 1; i <= 5; i++){
+    if(i <= num){
+      array.push(1);
+    }
+    else{
+      array.push(0);
+    }
+  }
+  return array;
+}
+
 
 
 module.exports = {
-  searchSongId: searchSongId
+  searchSongId: searchSongId,
+  convertToStarsArray: convertToStarsArray
 }
