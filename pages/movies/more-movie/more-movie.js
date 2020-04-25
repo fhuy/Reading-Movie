@@ -14,7 +14,6 @@ Page({
    */
   onLoad: function (options) {
     const categoryTitle = options.categoryTitle;
-    console.log('categoryTitle', categoryTitle);
     const moviesUrl = `${app.globalData.doubanBase}/v2/movie/in_theaters?start=0&count=3&${app.globalData.doubanApikey}`;    
   },
 
