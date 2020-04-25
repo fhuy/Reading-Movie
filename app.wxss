@@ -2,6 +2,7 @@
 text{
   font-family: MicroSoft Yahei;
   font-size: 24rpx;
+  color: #333;
 }
 .author-avatar{
   width: 60rpx;

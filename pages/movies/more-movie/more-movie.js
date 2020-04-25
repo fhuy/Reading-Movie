@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    requestUrl: ""
+    navigateTitle: "",
   },
 
   /**
@@ -14,6 +14,9 @@ Page({
    */
   onLoad: function (options) {
     const categoryTitle = options.title;
+    wx.setNavigationBarTitle({
+      title: categoryTitle
+    })
     var moviesUrl = "";
     switch (categoryTitle) {
       case "正在热映":
@@ -26,15 +29,7 @@ Page({
           moviesUrl =`${app.globalData.doubanBase}/v2/movie/top250?${app.globalData.doubanApikey}`; 
         break;     
     }
-    util.getMoreMovies(moviesUrl).then(res => {
-      console.log('res', res)
-      console.log('this',this)
-      this.processDoubanData(res.data)
-      console.log('ss', this.data.movies)
-    // this.setData({
-    //   movies: res.data.
-    // })
-    })
+    util.getMoreMovies(moviesUrl, this.processDoubanData)
   },
   processDoubanData: function (moviesDouban) {
     var movies = [];

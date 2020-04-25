@@ -13,7 +13,7 @@ const searchSongId = (searchType, songId) => {
   })
 }
 
-const getMoreMovies = (movieUrl) => {
+const getMoreMovies = (movieUrl, callBack) => {
   return new Promise((resolve, reject) => {
     wx.request({
       url: movieUrl,
@@ -21,7 +21,10 @@ const getMoreMovies = (movieUrl) => {
         'content-type': 'application/xml' // 默认值
       },
       method: 'GET',
-      success: (res) => resolve(res), 
+      // success: (res) => resolve(res), 
+      success: (res) => {
+        callBack(res.data)
+      },
       fail: (res) => reject(res)
     })
   })
