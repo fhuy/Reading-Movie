@@ -67,9 +67,8 @@ Page({
   },
   onMoreTap(event){
     const categoryTitle = event.currentTarget.dataset.title;
-    console.log('title', categoryTitle)
     wx.navigateTo({
-      url: `more-movie/more-movie?title=${categoryTitle}`,
+      url: `more-movie/more-movie?title=${categoryTitle}`
     })
   }
 })

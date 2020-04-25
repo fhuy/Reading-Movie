@@ -1,2 +1,2 @@
 <import src="../movie-grid/more-grid-template.wxml" />
-<template is="moreGridTemplate"></template>
+<template is="moreGridTemplate" data="{{...movies}}"></template>

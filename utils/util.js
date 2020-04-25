@@ -1,6 +1,7 @@
 // https://api.imjad.cn/cloudmusic/?type=song&id=375168
 const base_Url = "https://api.imjad.cn/cloudmusic/?",
       sucCode = 200;
+
 const searchSongId = (searchType, songId) => {
   return new Promise((resolve, reject) => {
     wx.request({
@@ -9,6 +10,20 @@ const searchSongId = (searchType, songId) => {
       fail: (res) => reject(res)
     })
     console.log('url', `${base_Url}type=${searchType}&id=${songId}`)
+  })
+}
+
+const getMoreMovies = (movieUrl) => {
+  return new Promise((resolve, reject) => {
+    wx.request({
+      url: movieUrl,
+      header: {
+        'content-type': 'application/xml' // 默认值
+      },
+      method: 'GET',
+      success: (res) => resolve(res), 
+      fail: (res) => reject(res)
+    })
   })
 }
 
@@ -30,5 +45,6 @@ const convertToStarsArray = (stars) => {
 
 module.exports = {
   searchSongId: searchSongId,
-  convertToStarsArray: convertToStarsArray
+  convertToStarsArray: convertToStarsArray,
+  getMoreMovies: getMoreMovies
 }
