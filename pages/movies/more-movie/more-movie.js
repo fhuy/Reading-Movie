@@ -1,4 +1,5 @@
-// pages/movies/movie-grid/more-grid-template.wxss.js
+const util = require('../../utils/util.js'),
+      app = getApp();
 Page({
 
   /**
@@ -12,7 +13,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    const categoryTitle = options.categoryTitle;
+    console.log('categoryTitle', categoryTitle);
+    const moviesUrl = `${app.globalData.doubanBase}/v2/movie/in_theaters?start=0&count=3&${app.globalData.doubanApikey}`;    
   },
 
   /**

@@ -134,7 +134,6 @@ Page({
   },
   onMusicTap: function(){
     let musicUrl,
-        // currentMusic = postsData.postList[this.data.currentPostId].music,        
         currentMusic = this.data.postData.music, 
         songId = currentMusic.id;
     API.searchSongId('song', songId).then(res => {

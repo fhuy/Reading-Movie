@@ -2,16 +2,17 @@ const util = require('../../utils/util.js'),
       app = getApp();
 Page({
   data: {
-    movies: []
+    // inTheaters: [],
+    // comingSoon: {},
+    // top250: []
   },
   onLoad: function(){
-    console.log('readyData', this.data.readyData)
     const inTheatersUrl = `${app.globalData.doubanBase}/v2/movie/in_theaters?start=0&count=3&${app.globalData.doubanApikey}`;
-    const comingSoonUrl = `${app.globalData.doubanBase}/v2/movie/coming_soon?${app.globalData.doubanApikey}`;
-    const top250Url = `${app.globalData.doubanBase}/v2/movie/top250?${app.globalData.doubanApikey}`;
+    const comingSoonUrl = `${app.globalData.doubanBase}/v2/movie/coming_soon?start=0&count=3&${app.globalData.doubanApikey}`;
+    const top250Url = `${app.globalData.doubanBase}/v2/movie/top250?start=0&count=3&${app.globalData.doubanApikey}`;
     this.getMovieListData(inTheatersUrl, "inTheaters", "正在热映");
-    // this.getMovieListData(comingSoonUrl, "comingSoon", "即将上映");
-    // this.getMovieListData(top250Url, "top250", "豆瓣Top250");
+    this.getMovieListData(comingSoonUrl, "comingSoon", "即将上映");
+    this.getMovieListData(top250Url, "top250", "豆瓣Top250");
   },
   getMovieListData: function(url, settedKey, categoryTitle){
     let that = this;
@@ -22,6 +23,7 @@ Page({
       },
       method: 'GET',
       success (res) {
+        console.log('res.data', res.data)
         that.processDoubanData(res.data, settedKey, categoryTitle)
       },
       fail: function(error) {
@@ -38,7 +40,7 @@ Page({
         title = title.substring(0, 6) + "...";
       }
       let temp = {
-        // stars: util.convertToStarsArray(subject.rating.stars),
+        stars: util.convertToStarsArray(subject.rating.stars),
         title: title,
         average: subject.rating.average,
         coverageUrl: subject.images.large,
@@ -48,15 +50,26 @@ Page({
       movies.push(temp)
     }
     console.log('movies', movies)
-    this.setData({
-      movies: movies
-    })
-    // let readyData = {};
+    // this.setData({
+    //   movies: movies
+    // })
+    let readyData = {};
+    // readyData[settedKey] = movies;
     // readyData[settedKey] = {
-    //   categoryTitle: categoryTitle,
     //   movies: movies
     // }
-    // console.log('readyData', readyData)
-    // this.setData(readyData);    
+    readyData[settedKey] = {
+      categoryTitle: categoryTitle,
+      movies: movies
+    }
+    console.log('readyData', readyData)
+    this.setData(readyData);    
+  },
+  onMoreTap(event){
+    const categoryTitle = event.currentTarget.dataset.title;
+    console.log('title', categoryTitle)
+    wx.navigateTo({
+      url: `more-movie/more-movie?title=${categoryTitle}`,
+    })
   }
 })
