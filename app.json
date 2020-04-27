@@ -1,12 +1,14 @@
 {
   "pages": [
+
     "pages/movies/movies",
+    "pages/movies/movie-detail/movie-detail",
     "pages/welcome/welcome",
     "pages/posts/post",
     "pages/music/music",
     "pages/posts/post-detail/post-detail",
-    "pages/movies/more-movie/more-movie",
-    "pages/movies/movie-detail/movie-detail"
+    "pages/movies/more-movie/more-movie"
+
   ],
   "window": {
     "backgroundTextStyle": "light",

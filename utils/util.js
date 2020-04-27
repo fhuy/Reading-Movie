@@ -23,7 +23,7 @@ const getMoreMovies = (movieUrl, callBack) => {
       // success: (res) => resolve(res), 
       success: (res) => {
         callBack(res.data)
-        console.log('res.data', res.data);
+        console.log('res.datadata', res.data);
       },
       fail: (res) => reject(res)
     })

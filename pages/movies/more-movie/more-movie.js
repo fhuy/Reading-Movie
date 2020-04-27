@@ -7,6 +7,9 @@ Page({
    */
   data: {
     navigateTitle: "",
+    totalCount: 0,
+    isEmpty: true,
+    movies: []
   },
 
   /**
@@ -17,7 +20,7 @@ Page({
     wx.setNavigationBarTitle({
       title: categoryTitle
     })
-    var moviesUrl = "";
+    let moviesUrl = "";
     switch (categoryTitle) {
       case "正在热映":
           moviesUrl = `${app.globalData.doubanBase}/v2/movie/in_theaters?${app.globalData.doubanApikey}`; 
@@ -29,11 +32,13 @@ Page({
           moviesUrl =`${app.globalData.doubanBase}/v2/movie/top250?${app.globalData.doubanApikey}`; 
         break;     
     }
+    this.setData({
+      requestUrl: moviesUrl
+    })
     util.getMoreMovies(moviesUrl, this.processDoubanData)
   },
-  processDoubanData: function (moviesDouban) {
-    
-    var movies = [];
+  processDoubanData: function (moviesDouban) {    
+    let movies = [];
     for (var idx in moviesDouban.subjects) {
       var subject = moviesDouban.subjects[idx];
       var title = subject.title;
@@ -50,30 +55,37 @@ Page({
       }
       movies.push(temp)
     }
-    console.log('doumovies', movies)
+    let totalMovies = {};
+    // 经过实验，data中数据不声明就赋值也可以，但会被看做初始值是undefined，Boolean值是false
+    if (!this.data.isEmpty) {
+      totalMovies = this.data.movies.concat(movies);
+    }
+    else {
+      totalMovies = movies;
+      this.data.isEmpty = false;
+    }
     this.setData({
-      movies: movies
+      movies: totalMovies
     });
-    // var totalMovies = {}
-
-    // //如果要绑定新加载的数据，那么需要同旧有的数据合并在一起
-    // if (!this.data.isEmpty) {
-    //   totalMovies = this.data.movies.concat(movies);
-    // }
-    // else {
-    //   totalMovies = movies;
-    //   this.data.isEmpty = false;
-    // }
-    // this.setData({
-    //   movies: totalMovies
-    // });
-
-    // this.data.totalCount += 20;
-    // wx.hideNavigationBarLoading();
-    // wx.stopPullDownRefresh()
+    this.data.totalCount += 20;
+    wx.hideNavigationBarLoading();
+    wx.stopPullDownRefresh();
   },
   onScrollLower: function () {
-    const nextUrl = ""
+    let nextUrl = `${this.data.requestUrl}&start=${this.data.totalCount}&count=20`;
+    // 我觉得没有考虑total<=20的情况
+    util.getMoreMovies(nextUrl, this.processDoubanData)
+    wx.showNavigationBarLoading();
+  },
+  onPullDownRefresh: function () {
+    // 顶部/下拉刷新只会展示前20条数据
+    // 把一切条件恢复到初始化时
+    let refreshUrl = `${this.data.requestUrl}&start=0&count=20`;
+    this.data.movies = {};
+    this.data.isEmpty = true;
+    this.data.totalCount = 0;
+    util.getMoreMovies(refreshUrl, this.processDoubanData);
+    wx.showNavigationBarLoading();
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

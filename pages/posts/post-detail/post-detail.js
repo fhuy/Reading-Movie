@@ -55,6 +55,7 @@ Page({
     });
     BackgroundAudioManager.onStop(function() {
       app.globalData.g_isPlayingMusic = false;  
+      app.globalData.g_currentMusicId = null;
       that.setData({
         isPlayingMusic: false
       });

@@ -2,9 +2,12 @@ const util = require('../../utils/util.js'),
       app = getApp();
 Page({
   data: {
-    // inTheaters: [],
-    // comingSoon: {},
-    // top250: []
+    inTheaters: [],
+    comingSoon: [],
+    top250: [],
+    searchResult: [],
+    containerShow: true,
+    searchPannelShow: false
   },
   onLoad: function(){
     const inTheatersUrl = `${app.globalData.doubanBase}/v2/movie/in_theaters?start=0&count=3&${app.globalData.doubanApikey}`;
@@ -70,5 +73,30 @@ Page({
     wx.navigateTo({
       url: `more-movie/more-movie?title=${categoryTitle}`
     })
+  },
+  onBindFocus: function(event){
+    this.setData({
+      containerShow: false,
+      searchPanelShow: true
+    })
+  },
+  onBindBlur: function(event){
+    const search_text = event.detail.value;
+    const searchUrl = `${app.globalData.doubanBase}/v2/movie/search?q={${search_text}}&${app.globalData.doubanApikey}`;
+    this.getMovieListData(searchUrl, "searchResult", "");
+  },
+  onCancelImgTap: function(){
+    this.setData({
+      containerShow: true,
+      searchPanelShow: false,
+      // 数据清空
+      searchResult: {}
+    })    
+  },
+  onMovieTap: function(event){
+    const movieId = event.currentTarget.dataset.movieid;
+    wx.navigateTo({
+      url: `movie-detail/movie-detail?id=${movieId}`
+    })    
   }
 })
