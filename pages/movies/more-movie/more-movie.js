@@ -32,6 +32,7 @@ Page({
     util.getMoreMovies(moviesUrl, this.processDoubanData)
   },
   processDoubanData: function (moviesDouban) {
+    
     var movies = [];
     for (var idx in moviesDouban.subjects) {
       var subject = moviesDouban.subjects[idx];
@@ -70,6 +71,9 @@ Page({
     // this.data.totalCount += 20;
     // wx.hideNavigationBarLoading();
     // wx.stopPullDownRefresh()
+  },
+  onScrollLower: function () {
+    const nextUrl = ""
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

@@ -9,7 +9,6 @@ const searchSongId = (searchType, songId) => {
       success: (res) => resolve(res), 
       fail: (res) => reject(res)
     })
-    console.log('url', `${base_Url}type=${searchType}&id=${songId}`)
   })
 }
 
@@ -24,6 +23,7 @@ const getMoreMovies = (movieUrl, callBack) => {
       // success: (res) => resolve(res), 
       success: (res) => {
         callBack(res.data)
+        console.log('res.data', res.data);
       },
       fail: (res) => reject(res)
     })

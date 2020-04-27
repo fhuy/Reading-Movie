@@ -4,10 +4,13 @@
 /*scroll-view*/
 .single-view-container{
     float:left;
-    margin-bottom: 40rpx;
+    /* 上 左右 下 */
+    margin: 20rpx 20rpx 20rpx;
 }
 
 .grid-container{
     height: 1300rpx;
-    margin:40rpx 0 40rpx 6rpx;
+    /* 上下 左右 */
+    margin:40rpx 14rpx;
+    /* margin: 40rpx 18rpx 40rpx 14rpx; */
 }

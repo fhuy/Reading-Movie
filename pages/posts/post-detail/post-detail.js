@@ -4,7 +4,7 @@ var app = getApp()
 Page({
   data: {
     postData: {},
-    collected: false, 
+    // collected: false, 
     currentPostId: 0,
     // isPlayingMusic: false  
   },
@@ -15,8 +15,8 @@ Page({
       postData,
       currentPostId: postId                
     });
-    // //如果在data上，xxx收藏状态，不存在SS中，那一回来，就没有了
-    // //而每一次改动都要存在SS中，因为再打开要从它中拿
+    //如果在data上，xxx收藏状态，不存在SS中，那一回来，就没有了
+    //而每一次改动都要存在SS中，因为再打开要从它中拿
     let postsCollected = wx.getStorageSync('posts_collected')
     if(postsCollected){
       this.setData({
@@ -30,7 +30,6 @@ Page({
     } 
     // 解决离开页面时音乐正在播放，回来时页面音乐是停止符号
     if(app.globalData.g_isPlayingMusic && app.globalData.g_currentMusicId === postId){
-      // this.data.isPlayingMusic = true;
       this.setData({
         isPlayingMusic: true 
       })
@@ -38,22 +37,28 @@ Page({
     this.setMusicMonitor();
   },
   setMusicMonitor: function(){
-    let that = this;
-    let BackgroundAudioManager = wx.getBackgroundAudioManager();
+    const that = this,
+          BackgroundAudioManager = wx.getBackgroundAudioManager();
     BackgroundAudioManager.onPlay(function() {
-      that.setData({
-        isPlayingMusic: true
-      })
       app.globalData.g_isPlayingMusic = true;
       app.globalData.g_currentMusicId = that.data.currentPostId;
-    })
+      that.setData({
+        isPlayingMusic: true
+      }); 
+    });
     BackgroundAudioManager.onPause(function() {
+      app.globalData.g_isPlayingMusic = false;
+      app.globalData.g_currentMusicId = null;     
       that.setData({
         isPlayingMusic: false
-      })
-      app.globalData.g_isPlayingMusic = false;
-      app.globalData.g_currentMusicId = null;
-    })
+      });        
+    });
+    BackgroundAudioManager.onStop(function() {
+      app.globalData.g_isPlayingMusic = false;  
+      that.setData({
+        isPlayingMusic: false
+      });
+    });
   },
   onCollectionTap: function(){
     const postsCollected = wx.getStorageSync('posts_collected'),
@@ -139,7 +144,6 @@ Page({
     API.searchSongId('song', songId).then(res => {
       if(res.statusCode === 200){
         musicUrl = res.data.data[0].url;
-        console.log('musicUrl', musicUrl);
         const BackgroundAudioManager = wx.getBackgroundAudioManager();
         if(this.data.isPlayingMusic){
           BackgroundAudioManager.pause();
@@ -150,7 +154,7 @@ Page({
           BackgroundAudioManager.src = musicUrl;
           BackgroundAudioManager.title = currentMusic.title;
           BackgroundAudioManager.singer = currentMusic.author;
-          BackgroundAudioManager.coverImgUrl = currentMusic.coverImg;      
+          BackgroundAudioManager.coverImgUrl = currentMusic.coverImg;  
           this.setData({
             isPlayingMusic: true
           })      
