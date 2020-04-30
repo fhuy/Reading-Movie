@@ -27,7 +27,7 @@ Page({
     // 如果director不止一位呢
     if(data.directors[0] != null) {
       if(data.directors[0].avatars != null) {
-        director.avatar = data.director[0].avatars.large
+        director.avatar = data.directors[0].avatars.large
       }
       director.name = data.directors[0].name;
       director.is = data.directors[0].id;
@@ -45,7 +45,7 @@ Page({
       score: data.rating.average,
       director: director,
       casts: util.convertToCastString(data.casts),
-      castsInfo: util.convertToCastInfo(data.casts),
+      castsInfo: util.convertToCastInfos(data.casts),
       summary: data.summary
     }
     this.setData({
