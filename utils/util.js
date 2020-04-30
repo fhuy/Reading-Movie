@@ -1,6 +1,5 @@
 // https://api.imjad.cn/cloudmusic/?type=song&id=375168
-const base_Url = "https://api.imjad.cn/cloudmusic/?",
-      sucCode = 200;
+const base_Url = "https://api.imjad.cn/cloudmusic/?";
 
 const searchSongId = (searchType, songId) => {
   return new Promise((resolve, reject) => {
@@ -23,7 +22,6 @@ const getMoreMovies = (movieUrl, callBack) => {
       // success: (res) => resolve(res), 
       success: (res) => {
         callBack(res.data)
-        console.log('res.datadata', res.data);
       },
       fail: (res) => reject(res)
     })
@@ -44,24 +42,24 @@ const convertToStarsArray = (stars) => {
   return array;
 }
 
-function convertToCastString(casts) {
-  var castsjoin = "";
-  for (var idx in casts) {
-    castsjoin = castsjoin + casts[idx].name + " / ";
-  }
-  return castsjoin.substring(0, castsjoin.length - 2);
+const convertToCastString = (casts) => {
+  let castNames = [];
+  casts.forEach(cast => {
+    castNames.push(cast.name)
+  })
+  return castNames.join('/')
 }
 
-function convertToCastInfos(casts) {
-  var castsArray = []
-  for (var idx in casts) {
-    var cast = {
-      img: casts[idx].avatars ? casts[idx].avatars.large : "",
-      name: casts[idx].name
+const convertToCastInfos = (casts) => {
+  let castsInfos = [];
+  casts.forEach(cast => {
+    let castinfo = {
+      img: cast.avatars ? cast.avatars.large : "",
+      name: cast.name
     }
-    castsArray.push(cast);
-  }
-  return castsArray;
+    castsInfos.push(castinfo);
+  })
+  return castsInfos
 }
 
 module.exports = {
