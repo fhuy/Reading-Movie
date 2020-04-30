@@ -3,10 +3,17 @@ let postData=require('../../data/posts-data')
 Page({
   data:{
     posts_content: [],
+    views: [0, 0, 0, 0, 0]
   },
   onLoad: function(options){
     this.setData({
       posts_content: postData.postList
+    })
+    if(!wx.getStorageSync('viewsCount')){
+      wx.setStorageSync('viewsCount', this.data.views)
+    }
+    this.setData({
+      views: wx.getStorageSync('viewsCount')
     })
   },
   onReady: function(){
@@ -22,6 +29,7 @@ Page({
     wx.navigateTo({
       url: `post-detail/post-detail?id=${postId}`
     })
+    this.data.views[postId]++;
   },
   onShareAppMessage: function (res) {
     return {
@@ -39,5 +47,11 @@ Page({
         // 不管成功失败都会执行
       }
     }
+  },
+  onShow: function () {
+    this.setData({
+      views: this.data.views  
+    })
+    wx.setStorageSync('viewsCount', this.data.views)
   },
 })
