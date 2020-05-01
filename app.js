@@ -35,6 +35,8 @@ App({
   },
   globalData: {
     userInfo: null,
+    appid: 'wx245ec0a89a3a6c7e',
+    secret: '9f73853c10d011d564900511521b9471',  
     g_isPlayingMusic: false,      //音乐是否正在被播放
     g_currentMusicId: null,        //哪一首音乐在被播放
     doubanBase: "https://api.douban.com",
