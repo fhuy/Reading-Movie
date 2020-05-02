@@ -6,6 +6,7 @@ class Movie {
 
   getMovieData(cb) {
     console.log('this', this)
+    // this代表movie的一个实例
     console.log('cb', cb)
     this.cb = cb;
     util.getMoreMovies(this.url, this.processDoubanData.bind(this));

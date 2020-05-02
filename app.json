@@ -34,9 +34,9 @@
       },
       {
         "pagePath": "pages/music/music",
-        "text": "音乐",
-        "iconPath": "images/tab/dianying.png",
-        "selectedIconPath": "images/tab/dianying_hl.png"
+        "text": "我的",
+        "iconPath": "images/tab/ciwei.png",
+        "selectedIconPath": "images/tab/ciwei_hl.png"
       }
     ]
   },
