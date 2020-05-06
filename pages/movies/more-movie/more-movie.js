@@ -71,7 +71,9 @@ Page({
     wx.hideNavigationBarLoading();
     wx.stopPullDownRefresh();
   },
-  onScrollLower: function () {
+  // 原本是onScrollLower，现改成onReachBottom，或者把onScrollLower内容复制给onReachBottom，
+  // 把onScrollLower注释掉
+  onReachBottom: function () {
     let nextUrl = `${this.data.requestUrl}&start=${this.data.totalCount}&count=20`;
     // 我觉得没有考虑total<=20的情况
     util.getMoreMovies(nextUrl, this.processDoubanData)
@@ -122,18 +124,11 @@ Page({
   },
 
   /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  // onReachBottom: function () {
 
-  },
+  // },
 
   /**
    * 用户点击右上角分享
